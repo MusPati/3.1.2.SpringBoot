@@ -2,7 +2,6 @@ package com.example.demo.service;
 
 import com.example.demo.model.User;
 import com.example.demo.repositories.UserRepository;
-import jakarta.persistence.EntityManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,7 +15,6 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
 
-    private EntityManager entityManager;
 
     @Autowired
     protected UserServiceImpl(UserRepository userRepository) {
@@ -38,10 +36,7 @@ public class UserServiceImpl implements UserService {
     @Transactional
     @Override
     public void updateUserInfo(int id, User user) {
-        User updatedUser = showUserById(id);
-        updatedUser.setFirstName(user.getFirstName());
-        updatedUser.setLastName(user.getLastName());
-        updatedUser.setEmail(user.getEmail());
+        userRepository.save(user);
     }
 
     @Transactional
